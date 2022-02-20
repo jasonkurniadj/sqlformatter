@@ -1,0 +1,10 @@
+textarea {
+    resize: none;
+    white-space: nowrap;
+    height: 50vh;
+}
+
+.custom-ddl {
+    width: auto !important;
+    display: inline-block;
+}
