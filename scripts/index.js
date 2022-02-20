@@ -17,46 +17,40 @@ $(function() {
             if(defSpaces !== null) $('#txtNumSpaces').val(defSpaces);
         }
     }
+    else {
+        $('#numSpaces').hide();
+    }
 
     $('input[name="rbIndent"]').on('click', function() {
-        if ($(this).val() === 'spaces') {
-            $('#numSpaces').show();
-        }
-        else {
-            $('#numSpaces').hide();
-        }
+        if ($(this).val() === 'spaces') $('#numSpaces').show();
+        else $('#numSpaces').hide();
     });
 
     function getDefaultParam(cname) {
-        // let name = cname + '=';
-        // let ca = document.cookie.split(';');
+        let name = cname + '=';
+        let ca = document.cookie.split(';');
 
-        // for(let i=0; i <ca.length; i++) {
-        //     let c = ca[i];
-        //     while(c.charAt(0) == ' ')
-        //         c = c.substring(1);
-        //     if(c.indexOf(name) == 0) {
-        //         console.log('Found cookie', cname, '=', c);
-        //         return c.substring(name.length, c.length);
-        //     }
-        // }
-        // return null;
+        for(let i=0; i <ca.length; i++) {
+            let c = ca[i];
+            while(c.charAt(0) == ' ') c = c.substring(1);
+            if(c.indexOf(name) == 0) return c.substring(name.length, c.length);
+        }
+        return null;
 
-        return window.localStorage.getItem(cname);
+        // return window.localStorage.getItem(cname);
     }
 
     function setDefaultParam(cname, cvalue) {
-        // if(getDefaultParam(cname) !== '') alert('Cookie already exists');
-
-        // const exdays = 1;
-        // const d = new Date();
-        // d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-        // let expires = "expires="+d.toUTCString();
-        // document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
-
         const currVal = getDefaultParam(cname);
         if(currVal !== null && currVal === cvalue) return;
-        window.localStorage.setItem(cname, cvalue);
+
+        const exdays = 7;
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        let expires = "expires="+d.toUTCString();
+        document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
+
+        // window.localStorage.setItem(cname, cvalue);
     }
 
     function saveAsToFile(filename, text) {
