@@ -36,8 +36,6 @@ $(function() {
             if(c.indexOf(name) == 0) return c.substring(name.length, c.length);
         }
         return null;
-
-        // return window.localStorage.getItem(cname);
     }
 
     function setDefaultParam(cname, cvalue) {
@@ -49,8 +47,6 @@ $(function() {
         d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
         let expires = "expires="+d.toUTCString();
         document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
-
-        // window.localStorage.setItem(cname, cvalue);
     }
 
     function saveAsToFile(filename, text) {
@@ -109,7 +105,7 @@ $(function() {
     });
 
     // Copy to Clipboard
-    $('input[name="btnCopy"]').on('click', function() {
+    $('button[id="btnCopy"]').on('click', function() {
         const txtFormattedSQL = document.getElementById('txtFormattedSQL');
         const formattedSQL = txtFormattedSQL.value;
         if(formattedSQL.trim() === '') return alert('Empty formatted sql');
@@ -121,7 +117,7 @@ $(function() {
     });
 
     // Download Formatted SQL to File
-    $('input[name="btnDownload"]').on('click', function() {
+    $('button[id="btnDownload"]').on('click', function() {
         // Validate File Extension
         let fileExt = document.getElementById('ddlFileExt').value;
         fileExt = fileExt.trim();
@@ -155,7 +151,7 @@ $(function() {
         
         // Prepare to Download
         const formatter = new SQLFormatter('sqlType');
-        const headerFile = formatter.getCopyright();
+        const headerFile = formatter.getTemplate();
         const fileContent = headerFile + formattedSQL;
         const filename = 'SQLFormatter-' + formatedDownloadDttm + '-' + uuid + '.' + fileExt;
 
